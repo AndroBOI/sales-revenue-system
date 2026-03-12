@@ -1,4 +1,3 @@
-// src/components/app-sidebar.tsx
 import {
   Sidebar,
   SidebarContent,
@@ -8,14 +7,22 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Home, Info, Mail } from "lucide-react";
+import {
+  BarChart2,
+  ClipboardList,
+  History,
+  LayoutDashboard,
+  Settings,
+} from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 const items = [
-  { title: "Home", url: "/", icon: Home },
-  { title: "About", url: "/about", icon: Info },
-  { title: "Contact", url: "/contact", icon: Mail },
+  { title: "Dashboard", url: "/", icon: LayoutDashboard },
+  { title: "Entry", url: "/entry", icon: ClipboardList },
+  { title: "Analytics", url: "/analytics", icon: BarChart2 },
+  { title: "History", url: "/history", icon: History },
 ];
 
 export const AppSidebar = () => {
@@ -31,11 +38,12 @@ export const AppSidebar = () => {
                   <SidebarMenuButton asChild>
                     <NavLink
                       to={item.url}
+                      end={item.url === "/"}
                       className={({ isActive }) =>
                         isActive ? "font-semibold text-primary" : ""
                       }
                     >
-                      <item.icon />
+                      <item.icon className="size-4" />
                       <span>{item.title}</span>
                     </NavLink>
                   </SidebarMenuButton>
@@ -45,6 +53,24 @@ export const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <NavLink
+                to="/settings"
+                className={({ isActive }) =>
+                  isActive ? "font-semibold text-primary" : ""
+                }
+              >
+                <Settings className="size-4" />
+                <span>Settings</span>
+              </NavLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   );
 };
