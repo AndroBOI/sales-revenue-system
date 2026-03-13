@@ -16,13 +16,6 @@ export interface AnalyticsRow {
   profit: number;
 }
 
-export interface Settings {
-  id: number;
-  business_name: string;
-  currency: string;
-  corporate_tax: number;
-}
-
 export interface SaveEntryPayload {
   date: string;
   revenue: number;
@@ -37,26 +30,39 @@ export interface SaveEntryPayload {
   }[];
 }
 
+export interface FixedExpense {
+  id: number;
+  name: string;
+  category: string;
+  amount: number;
+  start_date: string;
+  end_date: string;
+  notes?: string;
+}
+
 // ─── Entries ──────────────────────────────────────────
 
 export const getEntries = (): Promise<EntryRow[]> => window.api!.getEntries();
-
 export const saveEntry = (
   data: SaveEntryPayload,
 ): Promise<{ success: boolean }> => window.api!.saveEntry(data);
-
 export const deleteEntry = (date: string): Promise<{ success: boolean }> =>
   window.api!.deleteEntry(date);
 
-// ─── Analytics ───────────────────────────────────────
+// ─── Analytics ────────────────────────────────────────
 
 export const getAnalytics = (): Promise<AnalyticsRow[]> =>
   window.api!.getAnalytics();
 
-// ─── Settings ────────────────────────────────────────
+// ─── Fixed Expenses ───────────────────────────────────
 
-export const getSettings = (): Promise<Settings> => window.api!.getSettings();
-
-export const saveSettings = (
-  data: Omit<Settings, "id">,
-): Promise<{ success: boolean }> => window.api!.saveSettings(data);
+export const getFixedExpenses = (): Promise<FixedExpense[]> =>
+  window.api!.getFixedExpenses();
+export const addFixedExpense = (
+  data: Omit<FixedExpense, "id">,
+): Promise<{ success: boolean }> => window.api!.addFixedExpense(data);
+export const updateFixedExpense = (
+  data: FixedExpense & { notes?: string | null },
+): Promise<{ success: boolean }> => window.api!.updateFixedExpense(data);
+export const deleteFixedExpense = (id: number): Promise<{ success: boolean }> =>
+  window.api!.deleteFixedExpense(id);

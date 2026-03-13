@@ -135,7 +135,7 @@ const YearlyTab = ({
         <CardHeader>
           <CardTitle className="text-base">Corporate Tax Summary</CardTitle>
           <CardDescription>
-            Estimated annual tax — for your accountant
+            Estimated annual tax
           </CardDescription>
         </CardHeader>
         <CardContent>

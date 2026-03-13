@@ -10,10 +10,9 @@ contextBridge.exposeInMainWorld("api", {
   getAnalytics: () => ipcRenderer.invoke("db:getAnalytics"),
 
   getSettings: () => ipcRenderer.invoke("db:getSettings"),
-  saveSettings: (data) => ipcRenderer.invoke("db:saveSettings", data),
-  debugGetDurationExpenses: () => ipcRenderer.invoke("db:debugDuration"),
-  fixDuration: () => ipcRenderer.invoke("db:fixDuration"),
   getFixedExpenses: () => ipcRenderer.invoke("db:getFixedExpenses"),
   addFixedExpense: (data) => ipcRenderer.invoke("db:addFixedExpense", data),
   deleteFixedExpense: (id) => ipcRenderer.invoke("db:deleteFixedExpense", id),
+  updateFixedExpense: (data) =>
+    ipcRenderer.invoke("db:updateFixedExpense", data),
 });
