@@ -38,7 +38,6 @@ import {
   Legend,
 } from "recharts";
 
-// ─── Constants ────────────────────────────────────────
 const CORPORATE_TAX_RATE = 0.25;
 
 const CHART_COLORS = {
@@ -65,7 +64,7 @@ declare global {
   }
 }
 
-// ─── Helpers ─────────────────────────────────────────
+
 const peso = (n: number) =>
   `₱${n.toLocaleString("en-PH", { minimumFractionDigits: 0 })}`;
 
@@ -74,7 +73,7 @@ const pct = (current: number, previous: number) => {
   return ((current - previous) / previous) * 100;
 };
 
-// ─── Custom Tooltip ───────────────────────────────────
+
 const ChartTooltip = ({ active, payload, label, labelFormatter }: any) => {
   if (!active || !payload?.length) return null;
   const displayLabel = labelFormatter ? labelFormatter(label, payload) : label;
@@ -690,7 +689,6 @@ const Analytics = () => {
             </CardContent>
           </Card>
 
-          {/* Corp Tax Card */}
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Corporate Tax Summary</CardTitle>

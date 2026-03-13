@@ -50,7 +50,6 @@ declare global {
   }
 }
 
-// ─── Helpers ─────────────────────────────────────────
 const peso = (n: number) =>
   `₱${n.toLocaleString("en-PH", { minimumFractionDigits: 0 })}`;
 
@@ -59,7 +58,6 @@ const pct = (current: number, previous: number) => {
   return ((current - previous) / previous) * 100;
 };
 
-// ─── Trend Badge ──────────────────────────────────────
 const TrendBadge = ({
   current,
   previous,
@@ -91,7 +89,6 @@ const TrendBadge = ({
   );
 };
 
-// ─── KPI Card ─────────────────────────────────────────
 const KpiCard = ({
   title,
   value,
@@ -112,7 +109,6 @@ const KpiCard = ({
   </Card>
 );
 
-// ─── Main Component ───────────────────────────────────
 const Dashboard = () => {
   const [entries, setEntries] = useState<EntryRow[]>([]);
 
