@@ -12,7 +12,7 @@ function initDatabase() {
     ? path.join(__dirname, "../dev.db")
     : path.join(app.getPath("userData"), "app.db");
 
-  console.log("📦 DB path:", dbPath);
+  console.log("DB path:", dbPath);
   db = new Database(dbPath);
 
   db.exec(`
@@ -58,11 +58,10 @@ function initDatabase() {
     INSERT OR IGNORE INTO settings (id) VALUES (1);
   `);
 
-  console.log("✅ Database ready");
+  console.log("Database ready");
 }
 
 function registerHandlers() {
-  // ─── Entries ─────────────────────────────────────
   ipcMain.handle("db:getEntries", () => {
     return db
       .prepare(
@@ -86,7 +85,6 @@ function registerHandlers() {
   ipcMain.handle(
     "db:saveEntry",
     (event, { date, revenue, notes, expenses }) => {
-      // Upsert entry
       db.prepare(
         `
     INSERT INTO entries (date, revenue, notes)
@@ -247,6 +245,30 @@ function registerHandlers() {
       return { success: true };
     },
   );
+
+  ipcMain.handle("db:getFixedExpenses", () => {
+    return db
+      .prepare(`SELECT * FROM fixed_expenses ORDER BY start_date DESC`)
+      .all();
+  });
+
+  ipcMain.handle(
+    "db:addFixedExpense",
+    (event, { name, category, amount, start_date, end_date, notes }) => {
+      db.prepare(
+        `
+    INSERT INTO fixed_expenses (name, category, amount, start_date, end_date, notes)
+    VALUES (?, ?, ?, ?, ?, ?)
+  `,
+      ).run(name, category, amount, start_date, end_date, notes ?? null);
+      return { success: true };
+    },
+  );
+
+  ipcMain.handle("db:deleteFixedExpense", (event, id) => {
+    db.prepare(`DELETE FROM fixed_expenses WHERE id = ?`).run(id);
+    return { success: true };
+  });
 }
 
 async function createWindow() {
