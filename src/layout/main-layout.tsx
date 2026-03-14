@@ -16,7 +16,6 @@ const MainLayout = () => {
       <div className="flex h-screen w-screen overflow-hidden">
         <AppSidebar />
         <div className="flex flex-col flex-1 min-w-0">
-          {/* Header */}
           <header className="flex items-center justify-between px-6 py-3 border-b shrink-0">
             <div className="flex items-center gap-3">
               <SidebarTrigger />
@@ -26,7 +25,6 @@ const MainLayout = () => {
             <span className="text-sm text-muted-foreground">{currentDate}</span>
           </header>
 
-          {/* Scrollable content area */}
           <main className="flex-1 overflow-y-auto p-6">
             <Outlet />
           </main>

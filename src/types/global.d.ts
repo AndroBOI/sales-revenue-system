@@ -10,6 +10,10 @@ export {};
 declare global {
   interface Window {
     api?: {
+      generatePdf: (
+        html: string,
+        filename: string,
+      ) => Promise<{ success: boolean; filePath: string }>;
       getEntries: () => Promise<EntryRow[]>;
       saveEntry: (data: SaveEntryPayload) => Promise<{ success: boolean }>;
       deleteEntry: (date: string) => Promise<{ success: boolean }>;

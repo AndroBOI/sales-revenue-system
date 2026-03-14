@@ -15,6 +15,7 @@ import {
   History,
   LayoutDashboard,
   Settings,
+  FileDown,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -23,6 +24,7 @@ const items = [
   { title: "Entry", url: "/entry", icon: ClipboardList },
   { title: "Analytics", url: "/analytics", icon: BarChart2 },
   { title: "History", url: "/history", icon: History },
+  { title: "Export", url: "/export", icon: FileDown },
 ];
 
 export const AppSidebar = () => {

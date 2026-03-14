@@ -61,6 +61,31 @@ function initDatabase() {
 }
 
 function registerHandlers() {
+  ipcMain.handle("pdf:generate", async (event, { html, filename }) => {
+    const win = new BrowserWindow({
+      show: false,
+      webPreferences: { nodeIntegration: false, contextIsolation: true },
+    });
+
+    await win.loadURL(
+      `data:text/html;charset=utf-8,${encodeURIComponent(html)}`,
+    );
+    await new Promise((r) => setTimeout(r, 500));
+
+    const pdfBuffer = await win.webContents.printToPDF({
+      printBackground: true,
+      pageSize: "A4",
+      margins: { top: 0.5, bottom: 0.5, left: 0.5, right: 0.5 },
+    });
+
+    win.close();
+
+    const filePath = path.join(app.getPath("downloads"), filename);
+    fs.writeFileSync(filePath, pdfBuffer);
+
+    return { success: true, filePath };
+  });
+
   ipcMain.handle("db:getEntries", () => {
     const entries = db
       .prepare(
@@ -171,7 +196,6 @@ function registerHandlers() {
     return { success: true };
   });
 
-  // ─── Analytics ───────────────────────────────────
   ipcMain.handle("db:getAnalytics", () => {
     const entries = db
       .prepare(
@@ -221,7 +245,6 @@ function registerHandlers() {
     });
   });
 
-  // ─── Settings ────────────────────────────────────
   ipcMain.handle("db:getSettings", () => {
     return db.prepare("SELECT * FROM settings WHERE id = 1").get();
   });

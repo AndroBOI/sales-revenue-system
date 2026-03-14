@@ -10,7 +10,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // ./ is required so Electron can load assets from the filesystem
   base: process.env.ELECTRON === "true" ? "./" : "/",
   build: {
     outDir: "dist",

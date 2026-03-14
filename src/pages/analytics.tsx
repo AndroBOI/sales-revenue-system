@@ -43,11 +43,10 @@ const Analytics = () => {
   const get = (date: Date): AnalyticsRow => getAnalyticsRow(byDate, date);
   const sum = (dates: Date[]) => sumRange(byDate, dates);
 
-  // ─── Daily ───────────────────────────────────────────
   const today = get(new Date());
   const yesterday = get(subDays(new Date(), 1));
 
-  // ─── Weekly ──────────────────────────────────────────
+
   const thisWeekDays = eachDayOfInterval({
     start: startOfWeek(new Date()),
     end: endOfWeek(new Date()),
@@ -59,7 +58,7 @@ const Analytics = () => {
   const thisWeek = sum(thisWeekDays);
   const lastWeek = sum(lastWeekDays);
 
-  // ─── Monthly ─────────────────────────────────────────
+
   const monthRef = subMonths(new Date(), monthOffset);
   const monthDays = eachDayOfInterval({
     start: startOfMonth(monthRef),
@@ -69,7 +68,7 @@ const Analytics = () => {
   const canGoBackMonth = subMonths(new Date(), monthOffset + 1) >= minMonth;
   const canGoForwardMonth = monthOffset > 0;
 
-  // ─── Yearly ──────────────────────────────────────────
+
   const yearRef = subYears(new Date(), yearOffset);
   const yearMonths = eachMonthOfInterval({
     start: startOfYear(yearRef),

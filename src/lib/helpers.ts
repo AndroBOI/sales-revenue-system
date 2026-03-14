@@ -1,19 +1,15 @@
 import { format } from "date-fns";
 import type { EntryRow, AnalyticsRow } from "@/lib/api";
 
-// ─── Currency ─────────────────────────────────────────
 
 export const peso = (n: number) =>
   `₱${n.toLocaleString("en-PH", { minimumFractionDigits: 0 })}`;
 
-// ─── Percentage change ────────────────────────────────
 
 export const pct = (current: number, previous: number): number | null => {
   if (previous === 0) return null;
   return ((current - previous) / previous) * 100;
 };
-
-// ─── Date string helpers ──────────────────────────────
 
 export const toLocalDateStr = (date: Date): string =>
   format(date, "yyyy-MM-dd");
@@ -21,7 +17,6 @@ export const toLocalDateStr = (date: Date): string =>
 export const safeDate = (dateStr: string): Date =>
   new Date(dateStr + "T00:00:00");
 
-// ─── Entry lookup ─────────────────────────────────────
 
 export const buildDateMap = (rows: EntryRow[]): Record<string, EntryRow> =>
   Object.fromEntries(rows.map((r) => [r.date, r]));
@@ -38,8 +33,6 @@ export const getEntryRow = (
     profit:   0,
   };
 
-// ─── Analytics lookup ─────────────────────────────────
-
 export const buildAnalyticsMap = (rows: AnalyticsRow[]): Record<string, AnalyticsRow> =>
   Object.fromEntries(rows.map((r) => [r.date, r]));
 
@@ -54,7 +47,6 @@ export const getAnalyticsRow = (
     profit:   0,
   };
 
-// ─── Range sum ────────────────────────────────────────
 
 export const sumRange = (
   byDate: Record<string, AnalyticsRow>,
@@ -72,7 +64,6 @@ export const sumRange = (
     { revenue: 0, expenses: 0, profit: 0 },
   );
 
-// ─── Best / worst day ─────────────────────────────────
 
 export const peakDay = (rows: EntryRow[]): EntryRow | null =>
   rows.length ? rows.reduce((best, r) => (r.profit > best.profit ? r : best), rows[0]) : null;

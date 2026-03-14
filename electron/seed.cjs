@@ -3,7 +3,6 @@ const path = require("path");
 
 const db = new Database(path.join(__dirname, "../dev.db"));
 
-// ─── Create tables if not exist ───────────────────────
 db.exec(`
   CREATE TABLE IF NOT EXISTS entries (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -39,8 +38,6 @@ db.exec(`
 
   CREATE TABLE IF NOT EXISTS settings (
     id             INTEGER PRIMARY KEY,
-    business_name  TEXT DEFAULT 'My Business',
-    currency       TEXT DEFAULT 'PHP',
     corporate_tax  REAL DEFAULT 0.25,
     created_at     DATETIME DEFAULT CURRENT_TIMESTAMP
   );
@@ -48,7 +45,6 @@ db.exec(`
   INSERT OR IGNORE INTO settings (id) VALUES (1);
 `);
 
-// ─── Clear everything ─────────────────────────────────
 db.exec(`
   DELETE FROM daily_expenses;
   DELETE FROM entries;
@@ -71,12 +67,11 @@ const insertFixed = db.prepare(`
   VALUES (?, ?, ?, ?, ?, ?)
 `);
 
-// ─── Fixed / Duration expenses ────────────────────────
+
 insertFixed.run("Store Rent",      "Rent",      18000, "2026-01-01", "2026-12-31", "Annual lease");
 insertFixed.run("Internet",        "Utilities",  1800, "2026-01-01", "2026-06-30", "Fiber plan 6mo");
 insertFixed.run("Security System", "Utilities",  5000, "2026-02-01", "2026-04-30", "3-month contract");
 
-// ─── Daily entries: Jan 1 to today ───────────────────
 const startDate = new Date(2026, 0, 1);
 const endDate   = new Date();
 
@@ -117,7 +112,7 @@ for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
   }
 }
 
-console.log("✅ Reseeded with realistic data:");
+console.log("Reseeded with realistic data:");
 console.log("   Revenue:  ₱8k–22k/day (weekends higher, ~10% slow days)");
 console.log("   Everyday: Electricity ~₱450, Staff Meal ~₱280");
 console.log("   One-time: Supplies 15%, Maintenance 8%, Marketing 5% chance/day");

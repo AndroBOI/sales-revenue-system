@@ -1,5 +1,3 @@
-// ─── Types ────────────────────────────────────────────
-
 export interface EntryRow {
   id: number;
   date: string;
@@ -40,7 +38,6 @@ export interface FixedExpense {
   notes?: string;
 }
 
-// ─── Entries ──────────────────────────────────────────
 
 export const getEntries = (): Promise<EntryRow[]> => window.api!.getEntries();
 export const saveEntry = (
@@ -49,12 +46,10 @@ export const saveEntry = (
 export const deleteEntry = (date: string): Promise<{ success: boolean }> =>
   window.api!.deleteEntry(date);
 
-// ─── Analytics ────────────────────────────────────────
 
 export const getAnalytics = (): Promise<AnalyticsRow[]> =>
   window.api!.getAnalytics();
 
-// ─── Fixed Expenses ───────────────────────────────────
 
 export const getFixedExpenses = (): Promise<FixedExpense[]> =>
   window.api!.getFixedExpenses();

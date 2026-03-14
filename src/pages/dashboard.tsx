@@ -31,8 +31,8 @@ const Dashboard = () => {
     getEntries().then(setEntries);
   }, []);
 
-  const byDate = buildDateMap(entries); // ← helper
-  const getRow = (date: Date) => getEntryRow(byDate, date); // ← helper
+  const byDate = buildDateMap(entries);
+  const getRow = (date: Date) => getEntryRow(byDate, date); 
 
   const today = getRow(new Date());
   const yesterday = getRow(subDays(new Date(), 1));
@@ -55,8 +55,8 @@ const Dashboard = () => {
     { revenue: 0, expenses: 0, profit: 0 },
   );
 
-  const best = peakDay(monthRows); // ← called with monthRows
-  const slow = slowDay(monthRows); // ← called with monthRows
+  const best = peakDay(monthRows); 
+  const slow = slowDay(monthRows); 
 
   return (
     <div className="max-w-6xl mx-auto p-6 flex flex-col gap-6">
@@ -69,7 +69,6 @@ const Dashboard = () => {
 
       <Separator />
 
-      {/* ── Today ── */}
       <div>
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
           Today
@@ -105,7 +104,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* ── This Month ── */}
       <div>
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3">
           {format(now, "MMMM yyyy")}
@@ -117,7 +115,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* ── Peak & Slow Days ── */}
       <div className="grid grid-cols-2 gap-4">
         <DayCard
           title="Best Day This Month"
